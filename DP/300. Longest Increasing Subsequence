@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        
+        if(n == 0) { return 0;}
+        
+        int res = 0;
+        
+        //initially initializing the value of longest inceasing subsuquence
+        // for each index to one as, a number itself is also a subsequence of           
+        //length 1. And later iterating over each element and update the new             
+        //value of LIC with the maximum number.  
+
+        vector<int>LIS(n+1 , 1);
+        
+        //Storing the longest sequence for element at every Index
+        //So when we iterate to the first element again when don't 
+        //have to recompute the length of longest increasing sequence 
+        //upto that index
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < i; j++){
+                if(nums[i] > nums[j]){
+                    LIS[i] = max(LIS[i], LIS[j] + 1);
+                }
+            }
+        }
+        
+        
+        //finally the maximum value in the array will give the length of the 
+        // largest subsequence
+        
+        for(auto i: LIS){
+            res = max(res, i);
+        }
+        
+        return res;
+        
+    }
+};
